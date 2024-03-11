@@ -89,6 +89,19 @@ Route::name('admin.')->group(function() {
                 Route::get('/delete/{id}', [ContentController::class, 'ContactUsDelete'])->name('contact_us.delete');
                 Route::get('/status/{id}', [ContentController::class, 'ContactUsStatus'])->name('contact_us.status');
             });
+
+            Route::prefix('inner')->group(function() {
+                Route::get('/', [ContentController::class, 'InnerIndex'])->name('inner');
+                Route::get('/create', [ContentController::class, 'InnerCreate'])->name('inner.create');
+                Route::post('/store', [ContentController::class, 'InnerStore'])->name('inner.store');
+                Route::get('/view/{id}', [ContentController::class, 'InnerView'])->name('inner.view');
+                Route::get('/edit/{id}', [ContentController::class,'InnerEdit'])->name('inner.edit');
+                Route::post('/update', [ContentController::class, 'InnerUpdate'])->name('inner.update');
+                Route::get('/delete/{id}', [ContentController::class, 'InnerDelete'])->name('inner.delete');
+                Route::get('/status/{id}', [ContentController::class, 'InnerStatus'])->name('inner.status');
+            });
+
+
             
 
 

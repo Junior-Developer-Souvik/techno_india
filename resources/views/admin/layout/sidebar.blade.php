@@ -106,6 +106,13 @@
                             <p>Lead</p>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('admin.inner') }}" class="nav-link {{ (request()->is('admin/user/content-management/inner*')) ? 'active active_nav_link' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Inner</p>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item">
