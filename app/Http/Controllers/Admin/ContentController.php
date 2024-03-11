@@ -1477,6 +1477,7 @@ class ContentController extends Controller
         // return $id;
     }
 
+    
     public function GalaryUpdate(Request $request){
         // Start a database transaction
       
@@ -1491,14 +1492,8 @@ class ContentController extends Controller
              ],
 
         ]);
-
         try {
             $data = Galary::findOrFail($request->id);
-         
-           
-           
-           
-
             if($request->image){
                 $file = $request->file('image');
                 $fileExtentions = time().rand(10000,99999).'.'.$file->getClientOriginalExtension();
@@ -1506,20 +1501,9 @@ class ContentController extends Controller
                 $file->move($imgPath,$fileExtentions);
                 $data->image = $fileExtentions;
             }
-
             else{
                 $data->image = $request->old_img_path;
             }
-
-
-
-
-
-
-            
-
-           
-           
             $data->save();
             // Commit the transaction if everything is successful
             DB::commit();
@@ -1533,6 +1517,22 @@ class ContentController extends Controller
             return redirect()->back()->with('failure', 'Failed to update Galary. Please try again.');
         }
     }
+         
+           
+           
+           
+
+
+
+
+
+
+
+
+            
+
+           
+           
 
 
     public function GalaryDelete(Request $request,$id){
