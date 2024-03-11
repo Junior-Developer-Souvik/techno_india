@@ -113,6 +113,20 @@
                             <p>Inner</p>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('admin.choose_us') }}" class="nav-link {{ (request()->is('admin/user/content-management/choose_us*')) ? 'active active_nav_link' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Choose Us</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('admin.galary') }}" class="nav-link {{ (request()->is('admin/user/content-management/galary*')) ? 'active active_nav_link' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p> Galary</p>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item">

@@ -101,6 +101,30 @@ Route::name('admin.')->group(function() {
                 Route::get('/status/{id}', [ContentController::class, 'InnerStatus'])->name('inner.status');
             });
 
+            Route::prefix('choose_us')->group(function() {
+                Route::get('/', [ContentController::class, 'ChooseUsIndex'])->name('choose_us');
+                Route::get('/create', [ContentController::class, 'ChooseUsCreate'])->name('choose_us.create');
+                Route::post('/store', [ContentController::class, 'ChooseUsStore'])->name('choose_us.store');
+                Route::get('/view/{id}', [ContentController::class, 'ChooseUsView'])->name('choose_us.view');
+                Route::get('/edit/{id}', [ContentController::class,'ChooseUsEdit'])->name('choose_us.edit');
+                Route::post('/update', [ContentController::class, 'ChooseUsUpdate'])->name('choose_us.update');
+                Route::get('/delete/{id}', [ContentController::class, 'ChooseUsDelete'])->name('choose_us.delete');
+                Route::get('/status/{id}', [ContentController::class, 'ChooseUsStatus'])->name('choose_us.status');
+            });
+
+            Route::prefix('galary')->group(function() {
+                Route::get('/', [ContentController::class, 'GalaryIndex'])->name('galary');
+                Route::get('/create', [ContentController::class, 'GalaryCreate'])->name('galary.create');
+                Route::post('/store', [ContentController::class, 'GalaryStore'])->name('galary.store');
+                Route::get('/view/{id}', [ContentController::class, 'GalaryView'])->name('galary.view');
+                Route::get('/edit/{id}', [ContentController::class,'GalaryEdit'])->name('galary.edit');
+                Route::post('/update', [ContentController::class, 'GalaryUpdate'])->name('galary.update');
+                Route::get('/delete/{id}', [ContentController::class, 'GalaryDelete'])->name('galary.delete');
+                Route::get('/status/{id}', [ContentController::class, 'GalaryStatus'])->name('galary.status');
+            });
+
+            
+
 
             
 

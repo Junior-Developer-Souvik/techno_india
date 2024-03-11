@@ -12,6 +12,8 @@ use App\Models\ContentHome;
 use App\Models\Content_extracurricular;
 use App\Models\ContentEpc;
 use App\Models\SubAcademics;
+use App\Models\Choose_us;
+use App\Models\Galary;
 use App\Models\SocialMedia;
 use App\Models\Inner;
 use App\Models\ContactUs;
@@ -1230,18 +1232,329 @@ class ContentController extends Controller
                         return redirect()->back()->with('failure', 'Failed to update inner. Please try again.');
                     }
                 }
+
+
+                public function ChooseUsCreate(Request $request){
+                    return view('admin.choose_us.create');
+                }
+            
+                public function ChooseUsIndex(Request $request){
+                    // return "Souvik";
+                    // dd($request->all());
+                    if (!empty($request->keyword)) {
+                        $data = $this->CategoryRepository->getSearchChooseUs($request->keyword);
+                    } else {
+                        $data = $this->CategoryRepository->listAllChooseUs();
+                    }
+                    return view('admin.choose_us.index', compact('data'));
+                }
+
+                public function ChooseUsStore(Request $request){
+                    // Start a database transaction
+                    // dd($request->all());
+                    DB::beginTransaction();
+                        $request->validate([
+                            'title' => 'required|unique:choose_us,title|string|max:255',
+                            'short_desc'=> 'required | string',
+                            'logo'=> ' mimes:jpeg,png,jpg,gif,svg'
+                           
+                        ]);  
+                            
+                            
+                            
+                       
+            
+                     
+            
+                        try {
+                            $data = new Choose_us();
+                            $data->title = $request->title;
+                            $data->short_desc = $request->short_desc;
+
+                            $file = $request->file('logo');
+                            $fileExtentions = time().rand(10000,99999).".".$file->getClientOriginalExtension();
+                            $imgPath = public_path('choose_us_uploads');
+                            $file->move($imgPath,$fileExtentions);
+            
+                            $data->logo = $fileExtentions;
+                          
+                           
+                            
+                            
+                            
+                            
+                            $data->save();
+                            // Commit the transaction if everything is successful
+                            DB::commit();
+                            return redirect()->route('admin.choose_us')->with('success', 'New choose_us created');
+                        } catch (\Exception $e) {
+                            // Rollback the transaction if an exception occurs
+                            DB::rollback();
+                            // You can log the exception if needed
+                            \Log::error($e);
+                            // Redirect back with an error message
+                            return redirect()->back()->with('failure', 'Failed to create choose_us. Please try again.');
+                        }
+                }
+            
+                public function ChooseUsEdit($id){
+                    $data = $this->CategoryRepository->findChooseUsById($id);
+                    return view('admin.choose_us.edit', compact('data'));
+                    // return $id;
+                }
+
+                 public function ChooseUsUpdate(Request $request){
+        // Start a database transaction
+      
+
+        // dd($request->all());
+        DB::beginTransaction();
+
+        $request->validate([
+            'title' => [
+                'required',
+                
+                'string',
+                'max:255',
+              
+             ],
+                 
+               
+              'short_desc' => [
+                'required',
+                
+             ],
+               'logo'=>[
+                'mimes:jpg,jpeg,png,webp,gif'
+             ],
+
+        ]);
+
+        try {
+            $data = Choose_us::findOrFail($request->id);
+            $data->title = $request->title;
+            // dd($request->all());
+            $data->short_desc = $request->short_desc;
+           
+           
+
+            if($request->logo){
+                $file = $request->file('logo');
+                $fileExtentions = time().rand(10000,99999).'.'.$file->getClientOriginalExtension();
+                $imgPath = public_path('choose_us_uploads');
+                $file->move($imgPath,$fileExtentions);
+                $data->logo = $fileExtentions;
+            }
+
+            else{
+                $data->logo = $request->old_img_path;
+            }
+
+
+
+
+
+
+            
+
+           
+           
+            $data->save();
+            // Commit the transaction if everything is successful
+            DB::commit();
+            return redirect()->route('admin.choose_us')->with('success', 'Choose us updated successfully');
+        } catch (\Exception $e) {
+            // Rollback the transaction if an exception occurs
+            DB::rollback();
+            // You can log the exception if needed
+            \Log::error($e);
+            // Redirect back with an error message
+            return redirect()->back()->with('failure', 'Failed to update Choose us. Please try again.');
+        }
+    }
+
+
+    public function ChooseUsDelete(Request $request,$id){
+        DB::beginTransaction();
+
+        try {
+            $data = Choose_us::findOrFail($id);
+            $data->deleted_at = 0;
+            $data->save();
+            // Commit the transaction if the deletion is successful
+            DB::commit();
+            return redirect()->route('admin.choose_us')->with('success', 'Choose us deleted');
+        } catch (\Exception $e) {
+            // Rollback the transaction if an exception occurs
+            DB::rollback();
+            // Log the exception if needed
+            \Log::error($e);
+            // Redirect back with an error message
+            return redirect()->back()->with('failure', 'Failed to delete choose_us. Please try again.');
+        }
+     }
+
+     public function ChooseUsStatus(Request $request, $id){
+        $data = $this->CategoryRepository->findChooseUsById($id);
+        $data->status = ($data->status == 1) ? 0 : 1;
+        $data->update();
+        return response()->json([
+            'status' => 200,
+            'message' => 'Status updated',
+        ]);
+    }
     
                
-    
+     public function GalaryIndex(Request $request){
+        // return "Souvik";
+        // dd($request->all());
+        if (!empty($request->keyword)) {
+            $data = $this->CategoryRepository->getSearchGalary($request->keyword);
+        } else {
+            $data = $this->CategoryRepository->listAllGalary();
+        }
+        return view('admin.galary.index', compact('data'));
+    }
                 
     
                 
            
-         
+    public function GalaryCreate(Request $request){
+        return view('admin.galary.create');
+    }
 
                
                 
+    public function GalaryStore(Request $request){
+        // Start a database transaction
+        // dd($request->all());
+        DB::beginTransaction();
+            $request->validate([
+            //   
+                'image'=> ' mimes:jpeg,png,jpg,gif,svg'
+               
+            ]);  
                 
+                
+                
+           
+
+         
+
+            try {
+                $data = new Galary();
+               
+
+                $file = $request->file('image');
+                $fileExtentions = time().rand(10000,99999).".".$file->getClientOriginalExtension();
+                $imgPath = public_path('galary_uploads');
+                $file->move($imgPath,$fileExtentions);
+
+                $data->image = $fileExtentions;
+              
+               
+                
+                
+                
+                
+                $data->save();
+                // Commit the transaction if everything is successful
+                DB::commit();
+                return redirect()->route('admin.galary')->with('success', 'New galary created');
+            } catch (\Exception $e) {
+                // Rollback the transaction if an exception occurs
+                DB::rollback();
+                // You can log the exception if needed
+                \Log::error($e);
+                // Redirect back with an error message
+                return redirect()->back()->with('failure', 'Failed to create galary. Please try again.');
+            }
+    }
+
+    public function GalaryEdit($id){
+        $data = $this->CategoryRepository->findGalaryById($id);
+        return view('admin.galary.edit', compact('data'));
+        // return $id;
+    }
+
+    public function GalaryUpdate(Request $request){
+        // Start a database transaction
+      
+
+        // dd($request->all());
+        DB::beginTransaction();
+
+        $request->validate([
+           
+               'image'=>[
+                'mimes:jpg,jpeg,png,webp,gif'
+             ],
+
+        ]);
+
+        try {
+            $data = Galary::findOrFail($request->id);
+         
+           
+           
+           
+
+            if($request->image){
+                $file = $request->file('image');
+                $fileExtentions = time().rand(10000,99999).'.'.$file->getClientOriginalExtension();
+                $imgPath = public_path('galary_uploads');
+                $file->move($imgPath,$fileExtentions);
+                $data->image = $fileExtentions;
+            }
+
+            else{
+                $data->image = $request->old_img_path;
+            }
+
+
+
+
+
+
+            
+
+           
+           
+            $data->save();
+            // Commit the transaction if everything is successful
+            DB::commit();
+            return redirect()->route('admin.galary')->with('success', 'Galary updated successfully');
+        } catch (\Exception $e) {
+            // Rollback the transaction if an exception occurs
+            DB::rollback();
+            // You can log the exception if needed
+            \Log::error($e);
+            // Redirect back with an error message
+            return redirect()->back()->with('failure', 'Failed to update Galary. Please try again.');
+        }
+    }
+
+
+    public function GalaryDelete(Request $request,$id){
+        DB::beginTransaction();
+
+        try {
+            $data = Galary::findOrFail($id);
+            $data->deleted_at = 0;
+            $data->save();
+            // Commit the transaction if the deletion is successful
+            DB::commit();
+            return redirect()->route('admin.galary')->with('success', 'Galary deleted Successfully');
+        } catch (\Exception $e) {
+            // Rollback the transaction if an exception occurs
+            DB::rollback();
+            // Log the exception if needed
+            \Log::error($e);
+            // Redirect back with an error message
+            return redirect()->back()->with('failure', 'Failed to delete galary. Please try again.');
+        }
+     }
+
                 
                 
 

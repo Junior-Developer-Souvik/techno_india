@@ -33,5 +33,13 @@ interface CategoryInterface {
     public function findInnerById($id);
     public function getSearchInner(string $term);
 
+    public function listAllChooseUs();
+    public function findChooseUsById($id);
+    public function getSearchChooseUs(string $term);
+
+    public function listAllGalary();
+    public function findGalaryById($id);
+    public function getSearchGalary(string $term);
+
     
 }

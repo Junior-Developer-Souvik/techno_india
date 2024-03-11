@@ -9,7 +9,9 @@ use App\Models\Blogs;
 use App\Models\SocialMedia;
 use App\Models\ContactUs;
 use App\Models\Lead;
+use App\Models\Galary;
 use App\Models\Inner;
+use App\Models\Choose_us;
 use App\Models\ContentAcademics;
 use App\Models\SubAcademics;
 use App\Models\Content_extracurricular;
@@ -134,6 +136,36 @@ class CategoryRepository implements CategoryInterface
     public function getSearchInner(string $term)
     {
         return Inner::where([['title', 'LIKE', '%' . $term . '%']])->get();
+    }
+
+    // Choose_us
+    public function listAllChooseUs()
+    {
+        return Choose_us::latest()->where('deleted_at',1)->get();
+    }
+    public function findChooseUsById($id)
+    {
+        return Choose_us::findOrFail($id);
+    }
+
+    public function getSearchChooseUs(string $term)
+    {
+        return Choose_us::where([['title', 'LIKE', '%' . $term . '%']])->get();
+    }
+
+    // Choose_us
+    public function listAllGalary()
+    {
+        return Galary::latest()->where('deleted_at',1)->get();
+    }
+    public function findGalaryById($id)
+    {
+        return Galary::findOrFail($id);
+    }
+
+    public function getSearchGalary(string $term)
+    {
+        return Galary::where([['title', 'LIKE', '%' . $term . '%']])->get();
     }
 
     
