@@ -29,5 +29,9 @@ interface CategoryInterface {
     public function findContactUsById($id);
     public function getSearchContactUs(string $term);
 
+    public function listAllInner();
+    public function findInnerById($id);
+    public function getSearchInner(string $term);
+
     
 }

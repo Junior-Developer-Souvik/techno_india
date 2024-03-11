@@ -9,6 +9,7 @@ use App\Models\Blogs;
 use App\Models\SocialMedia;
 use App\Models\ContactUs;
 use App\Models\Lead;
+use App\Models\Inner;
 use App\Models\ContentAcademics;
 use App\Models\SubAcademics;
 use App\Models\Content_extracurricular;
@@ -118,6 +119,21 @@ class CategoryRepository implements CategoryInterface
     {
         return ContactUs::where([['title', 'LIKE', '%' . $term . '%']])->where('deleted_at', 1)
         ->get();
+    }
+
+    // Inner
+    public function listAllInner()
+    {
+        return Inner::latest()->get();
+    }
+    public function findInnerById($id)
+    {
+        return Inner::findOrFail($id);
+    }
+
+    public function getSearchInner(string $term)
+    {
+        return Inner::where([['title', 'LIKE', '%' . $term . '%']])->get();
     }
 
     

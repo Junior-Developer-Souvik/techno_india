@@ -13,6 +13,7 @@ use App\Models\Content_extracurricular;
 use App\Models\ContentEpc;
 use App\Models\SubAcademics;
 use App\Models\SocialMedia;
+use App\Models\Inner;
 use App\Models\ContactUs;
 use App\Models\ContentAcademics;
 use App\Models\ContentContact;
@@ -1157,76 +1158,79 @@ class ContentController extends Controller
                 return view('admin.contact_us.index', compact('data'));
             }
 
-            // public function ContactUsCreate(Request $request){
-            //        return view('admin.contact_us.create');
-              
-            // }
+            public function InnerIndex(Request $request){
+                // return "Souvik";
+                // dd($request->all());
+                if (!empty($request->keyword)) {
+                    $data = $this->CategoryRepository->getSearchInner($request->keyword);
+                } else {
+                    $data = $this->CategoryRepository->listAllInner();
+                }
+                return view('admin.inner.index', compact('data'));
+            }
 
-            // public function ContactUsStore(Request $request){
-            //     // Start a database transaction
-            //     dd($request->all());
-            //     DB::beginTransaction();
-            //         $request->validate([
-            //             'ph1' => 'required|unique:contact_us,mobile_number 1',
-            //             'ph2'=> 'required | unique:contact_us,mobile_number 2 ',
-            //             'email'=>'required | string ',
-            //             'address'=>'required | text',
-                        
-            //         ]);  
-                        
-                        
-                        
-                   
+            public function InnerEdit($id){
+                $data = $this->CategoryRepository->findInnerById($id);
+                return view('admin.inner.edit', compact('data'));
+                // return $id;
+            }
+            
         
-                 
+            public function InnerUpdate(Request $request){
+                // Start a database transaction
+                // dd($request->all());
         
-            //         try {
-            //             $data = new ContactUs();
-            //             $data->mobile_number_1 = $request->ph1;
-            //             $data->mobile_number_2 = $request->ph2;
-            //             $data->email = $request->email;
-            //             $data->address = $request->address;
-                     
-                        
-                        
-                        
-                        
-            //             $data->save();
-            //             // Commit the transaction if everything is successful
-            //             DB::commit();
-            //             return redirect()->route('admin.contact_us')->with('success', 'New contact_us created');
-            //         } catch (\Exception $e) {
-            //             // Rollback the transaction if an exception occurs
-            //             DB::rollback();
-            //             // You can log the exception if needed
-            //             \Log::error($e);
-            //             // Redirect back with an error message
-            //             return redirect()->back()->with('failure', 'Failed to create contact us Please try again.');
-            //         }
-            // }
-
-
+                // dd($request->all());
+                DB::beginTransaction();
         
-        
+                $request->validate([
+                    'title' => [
+                        'required',
+                        'unique:social_media,title',
+                        'string',
+                        'max:255',
+                       
+                    ],
 
-
-
-
-
-
-
-
-
-
-
-
-                
-
-
+                    'desc'=> 'required | string',
+                'page_title'=>'required | string ',
+                'meta_title'=>'required | string',
+                'meta_desc'=>'required | string' ,
+                'meta_keyword'=>'required | string'
     
-               
-               
-               
+                    
+    
+    
+    
+                  
+        
+                ]);
+    
+                try {
+                    $data = Inner::findOrFail($request->id);
+                    $data->title = $request->title;
+                    $data->desc = $request->desc;
+                    $data->page_title = $request->page_title;
+                    $data->meta_title = $request->meta_title;
+                    $data->meta_desc = $request->meta_desc;
+                    $data->meta_keyword= $request->meta_keyword;
+                   
+    
+                  
+                        $data->save();
+                        // Commit the transaction if everything is successful
+                        DB::commit();
+                        return redirect()->route('admin.inner')->with('success', 'Inner updated successfully');
+                    } catch (\Exception $e) {
+                        // Rollback the transaction if an exception occurs
+                        DB::rollback();
+                        // You can log the exception if needed
+                        \Log::error($e);
+                        // Redirect back with an error message
+                        return redirect()->back()->with('failure', 'Failed to update inner. Please try again.');
+                    }
+                }
+    
                
     
                 
