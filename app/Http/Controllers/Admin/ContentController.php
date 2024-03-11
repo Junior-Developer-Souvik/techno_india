@@ -1487,7 +1487,7 @@ class ContentController extends Controller
         $request->validate([
            
                'image'=>[
-                'mimes:jpg,jpeg,png,webp,gif'
+                'mimes:jpg,jpeg,png,webp,gif,avif'
              ],
 
         ]);
