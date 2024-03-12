@@ -60,7 +60,7 @@
                                         <td>
                                             <div class="d-flex">
                                                 @if (!empty($item->image) && file_exists(public_path($item->image)))
-                                                    <img src="{{ asset('uploads\social') }}\{{$item->image}}" alt="banner-image" style="height: 50px" class="img-thumbnail mr-2">
+                                                    <img src="{{ asset($item->image) }}" alt="banner-image" style="height: 50px" class="img-thumbnail mr-2">
                                                 @else
                                                     <img src="{{ asset('backend-assets/images/placeholder.jpg') }}" alt="social-media-image" style="height: 50px" class="mr-2">
                                                 @endif

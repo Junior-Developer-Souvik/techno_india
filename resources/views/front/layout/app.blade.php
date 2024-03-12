@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{{asset('frontend-assets/assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('frontend-assets/assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('frontend-assets/assets/css/responsive.css')}}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 </head>
 <body>
     <div class="main">

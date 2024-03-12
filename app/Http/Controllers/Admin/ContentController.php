@@ -1024,10 +1024,10 @@ class ContentController extends Controller
                 $file = $request->file('image');
                 $fileExtentions = time().rand(10000,99999).'.'.$file->getClientOriginalExtension();
                 // dd($fileExtentions);
-                $imgPath = public_path('uploads\social');
+                $imgPath = public_path('uploads/social');
                 // dd($imgPath);
                 $file->move($imgPath,$fileExtentions); 
-                $data->image = $fileExtentions;
+                $data->image = 'uploads/social/'.$fileExtentions;
                 // dd($data->image);
                 
                 $data->save();
@@ -1060,9 +1060,9 @@ class ContentController extends Controller
             $request->validate([
                 'title' => [
                     'required',
-                    'unique:social_media,title',
                     'string',
                     'max:255',
+                    
                    
                 ],
 
@@ -1084,9 +1084,9 @@ class ContentController extends Controller
                     $file = $request->file('image');
                     $fileExtentions = time().rand(10000,99999).'.'.$file->getClientOriginalExtension();
                     // dd($fileExtentions);
-                    $imgPath = public_path('uploads\social');
+                    $imgPath = public_path('uploads/social');
                     $file->move($imgPath,$fileExtentions); 
-                    $data->image = $fileExtentions;
+                    $data->image ='uploads/social/'.$fileExtentions;
                 }
                 else{
                     $data->image = $request->old_img_path;
@@ -1148,7 +1148,7 @@ class ContentController extends Controller
                 }
                 return view('admin.lead.index', compact('data'));
             }
-            
+
             public function ContactUsIndex(Request $request){
                 // return "Souvik";
                 // dd($request->all());

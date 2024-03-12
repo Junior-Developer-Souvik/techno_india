@@ -83,6 +83,42 @@ Route::name('front.')->group(function() {
         Route::get('/', [ContentController::class, 'about'])->name('index');
         Route::get('/email', [ContentController::class, 'send'])->name('email.send');
     });
+    // Inner
+    Route::prefix('inner')->name('inner.')->group(function() {
+        Route::get('/', [ContentController::class, 'InnerContent'])->name('index');
+    });
+    //Extracurricular
+    Route::prefix('extra-curricular')->name('extra-curricular.')->group(function() {
+        Route::get('/', [ContentController::class, 'Extracurricular'])->name('index');
+    });
+    //blogs
+    Route::prefix('blogs')->name('blogs.')->group(function() {
+        Route::get('/', [ContentController::class, 'blogs'])->name('index');
+    });
+    //academics
+    Route::prefix('academics')->name('academics.')->group(function() {
+        Route::get('/', [ContentController::class, 'academics'])->name('index');
+    });
+    //contactUs
+    Route::prefix('contactUs')->name('contactUs.')->group(function() {
+        Route::get('/', [ContentController::class, 'contactUs'])->name('index');
+    });
+    //lead
+    //  Route::prefix('lead')->name('lead.')->group(function() {
+                // Route::get('/', [ContentController::class, 'LeadIndex'])->name('index');
+                // Route::get('/create', [ContentController::class, 'LeadCreate'])->name('create');
+                Route::post('/store', [ContentController::class, 'LeadStore'])->name('store');
+                // Route::get('/view/{id}', [ContentController::class, 'LeadView'])->name('view');
+                // Route::get('/edit/{id}', [ContentController::class,'LeadEdit'])->name('edit');
+                // Route::post('/update', [ContentController::class, 'LeadUpdate'])->name('update');
+                // Route::get('/delete/{id}', [ContentController::class, 'LeadDelete'])->name('delete');
+                // Route::get('/status/{id}', [ContentController::class, 'LeadStatus'])->name('status');
+        // });
+
+  
+
+    // Inner
+    
 
     // about
     Route::prefix('career')->name('career.')->group(function() {

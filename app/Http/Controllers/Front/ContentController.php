@@ -26,6 +26,16 @@ use App\Models\ContentHome;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+use App\Models\Inner;
+use App\Models\Content_extracurricular;
+use App\Models\Blogs;
+use App\Models\ContentAcademics;
+use App\Models\ContactUs;
+use App\Models\SocialMedia;
+use App\Models\SubAcademics;
+// use App\Models\Lead;
+
+
 class ContentController extends Controller
 {
     public function send(Request $request){
@@ -138,6 +148,56 @@ class ContentController extends Controller
     //     $news =News::where('slug', $slug)->first();
     //     return view('front.content.news-details', compact('news'));
     // }
+
+    public function InnerContent(){
+        $inner = Inner::first();
+        return view("front.content.inner", compact('inner'));
+    }
+    
+    public function Extracurricular(){
+        $extraCurricular = Content_extracurricular::first();
+        return view("front.content.extra-curricular", compact('extraCurricular'));
+    }
+
+    public function blogs(){
+        $blogs = Blogs::where('status',1)->where('deleted_at',1)->get();
+        // $faculty = Faculty::where('status',1)->where('deleted_at',1)->get();
+        return view("front.content.blogs", compact('blogs'));
+    }
+
+    public function academics(){
+        $contentacademics = ContentAcademics::first();
+        $SubAcademics = SubAcademics::where('status',1)->where('deleted_at',1)->get();
+
+        return view("front.content.contentacademics", compact('contentacademics','SubAcademics'));
+    }
+
+    public function contactUs(){
+        $ContactUs = ContactUs::first();
+        $SocialMedia = SocialMedia::where('status',1)->where('deleted_at',1)->get();
+        
+        return view("front.content.ContactUs", compact('ContactUs','SocialMedia'));
+    }
+
+    public function LeadStore(Request $request){
+        // return $request->post();
+        $data = new Lead();
+        $data->full_name = $request->full_name;
+        $data->mobile_number = $request->mobile_number;
+        $data->message = $request->message;
+
+        $data->save();
+        return ["msg"=>"data inserted successfully"];
+        // return response()->json($data);
+
+    }
+
+   
+
+   
+
+
+    
     
     public function career(){
         $data =Job::latest()->where('status', 1)->where('deleted_at', 1)->get();
