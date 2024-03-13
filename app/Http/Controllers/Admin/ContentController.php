@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Interfaces\CategoryInterface;
-use App\Exports\LeadsExport;
-use Maatwebsite\Excel\Facades\Excel;
+
 
 use Illuminate\Support\Facades\Hash;
 use App\Models\ContentAbout;
@@ -865,7 +864,7 @@ class ContentController extends Controller
                 $imgPath = public_path('sub_academics_uploads');
                 $file->move($imgPath,$fileExtentions);
 
-                $data->logo = $fileExtentions;
+                $data->logo = "sub_academics_uploads".$fileExtentions;
                
                 
             
@@ -1151,9 +1150,7 @@ class ContentController extends Controller
                 return view('admin.lead.index', compact('data'));
             }
 
-            public function export(){
-                return Excel::download(new LeadsExport(), 'bulkData.xlsx');
-            }
+           
 
             public function ContactUsIndex(Request $request){
                 // return "Souvik";
@@ -1165,6 +1162,73 @@ class ContentController extends Controller
                 }
                 return view('admin.contact_us.index', compact('data'));
             }
+
+    //  public function export(Request $request)
+    // {
+    //     $data = $this->orderRepository->csvOrders();
+
+    //     if (count($data) > 0) {
+    //         $delimiter = ",";
+    //         $filename = "Order-".date('Y-m-d').".csv";
+
+    //         // Create a file pointer
+    //         $f = fopen('php://memory', 'w');
+
+    //         // Set column headers
+    //         $fields = array('SR No','Order No','Order Date','Restaurant','Customer Details','Order Amount','Payment Mode','Status');
+    //         fputcsv($f, $fields, $delimiter);
+
+    //         $count = 1;
+
+    //         foreach($data as $key=> $row) {
+    //                  $status='New Order';
+                    
+
+    //                 if($row['transaction_id'] ==''){
+    //                     $mode='Cash On Delivery';
+    //                 }
+    //                 else{
+    //                     if($row['transaction_id'] =='test-wallet'){
+    //                         $mode='Paid By Wallet';
+    //                     }
+    //                     elseif($row['transaction_id'] =='test-cod'){
+    //                         $mode='Cash On Delivery';
+    //                     }
+    //                     else{
+    //                         $mode=' Online Payment';
+    //                     }
+    //                 }
+    //                 $row2 = 'Name : '.$row['name']."\n".'Mobile : '.$row['mobile']."\n";
+    //                 $lineData = array(
+    //                     $key+1,
+    //                     $row['unique_id'] ? $row['unique_id'] : '',
+    //                     date("d-M-Y h:i a",strtotime($row['created_at'])) ? date("d-M-Y h:i a",strtotime($row['created_at'])) : '',
+    //                     $row->restaurant['name'] ? $row->restaurant['name'] : '',
+    //                     $row2,
+    //                     $row['total_amount'] ? $row['total_amount'] : '',
+    //                     $mode,
+    //                     $status,
+    //                     '',
+    //                     ''
+    //                 );
+
+    //                 fputcsv($f, $lineData, $delimiter);
+
+    //                 $count++;
+                
+    //         }
+
+    //         // Move back to beginning of file
+    //         fseek($f, 0);
+
+    //         // Set headers to download file rather than displayed
+    //         header('Content-Type: text/csv');
+    //         header('Content-Disposition: attachment; filename="' . $filename . '";');
+
+    //         //output all remaining data on a file pointer
+    //         fpassthru($f);
+    //     }
+    // }
 
             public function InnerIndex(Request $request){
                 // return "Souvik";
@@ -1355,6 +1419,20 @@ class ContentController extends Controller
             else{
                 $data->logo = $request->old_img_path;
             }
+            
+             $data->save();
+             // Commit the transaction if everything is successful
+             DB::commit();
+             return redirect()->route('admin.choose_us')->with('success', 'Choose us updated successfully');
+         } catch (\Exception $e) {
+             // Rollback the transaction if an exception occurs
+             DB::rollback();
+             // You can log the exception if needed
+             \Log::error($e);
+             // Redirect back with an error message
+             return redirect()->back()->with('failure', 'Failed to update Choose us. Please try again.');
+         }
+     }
 
 
 
@@ -1364,20 +1442,6 @@ class ContentController extends Controller
             
 
            
-           
-            $data->save();
-            // Commit the transaction if everything is successful
-            DB::commit();
-            return redirect()->route('admin.choose_us')->with('success', 'Choose us updated successfully');
-        } catch (\Exception $e) {
-            // Rollback the transaction if an exception occurs
-            DB::rollback();
-            // You can log the exception if needed
-            \Log::error($e);
-            // Redirect back with an error message
-            return redirect()->back()->with('failure', 'Failed to update Choose us. Please try again.');
-        }
-    }
 
 
     public function ChooseUsDelete(Request $request,$id){
@@ -1385,8 +1449,10 @@ class ContentController extends Controller
 
         try {
             $data = Choose_us::findOrFail($id);
-            $data->deleted_at = 0;
-            $data->save();
+            // $data->deleted_at = 0;
+            unlink('choose_us_uploads/'.$data->logo);
+            $data->delete();
+            // $data->save();
             // Commit the transaction if the deletion is successful
             DB::commit();
             return redirect()->route('admin.choose_us')->with('success', 'Choose us deleted');
@@ -1440,42 +1506,42 @@ class ContentController extends Controller
                 'image'=> ' mimes:jpeg,png,jpg,gif,svg'
                
             ]);  
+            
+                        try {
+                            $data = new Galary();
+                           
+            
+                            $file = $request->file('image');
+                            $fileExtentions = time().rand(10000,99999).".".$file->getClientOriginalExtension();
+                            $imgPath = public_path('galary_uploads');
+                            $file->move($imgPath,$fileExtentions);
+            
+                            $data->image = $fileExtentions;
+                            $data->save();
+                            // Commit the transaction if everything is successful
+                            DB::commit();
+                            return redirect()->route('admin.galary')->with('success', 'New galary created');
+                        } catch (\Exception $e) {
+                            // Rollback the transaction if an exception occurs
+                            DB::rollback();
+                            // You can log the exception if needed
+                            \Log::error($e);
+                            // Redirect back with an error message
+                            return redirect()->back()->with('failure', 'Failed to create galary. Please try again.');
+                        }
+                }
                 
                 
                 
            
 
          
-
-            try {
-                $data = new Galary();
-               
-
-                $file = $request->file('image');
-                $fileExtentions = time().rand(10000,99999).".".$file->getClientOriginalExtension();
-                $imgPath = public_path('galary_uploads');
-                $file->move($imgPath,$fileExtentions);
-
-                $data->image = $fileExtentions;
               
                
                 
                 
                 
                 
-                $data->save();
-                // Commit the transaction if everything is successful
-                DB::commit();
-                return redirect()->route('admin.galary')->with('success', 'New galary created');
-            } catch (\Exception $e) {
-                // Rollback the transaction if an exception occurs
-                DB::rollback();
-                // You can log the exception if needed
-                \Log::error($e);
-                // Redirect back with an error message
-                return redirect()->back()->with('failure', 'Failed to create galary. Please try again.');
-            }
-    }
 
     public function GalaryEdit($id){
         $data = $this->CategoryRepository->findGalaryById($id);
@@ -1523,6 +1589,8 @@ class ContentController extends Controller
             return redirect()->back()->with('failure', 'Failed to update Galary. Please try again.');
         }
     }
+
+
          
            
            

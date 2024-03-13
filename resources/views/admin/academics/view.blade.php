@@ -135,7 +135,7 @@
                                             <td>{{ $item->title }}</td>
                                             <td>{{ $item->desc }}</td>
                                             {{-- {{dd($item->logo)}} --}}
-                                            <td><img src="{{ asset('sub_academics_uploads') }}/{{ $item->logo }}"
+                                            <td><img src="{{ asset($item->logo) }}"
                                                     alt="no-image" width="85px" class="img-thumbnail"></td>
                                             <td>
                                                 <div class="custom-control custom-switch mt-1" data-toggle="tooltip"

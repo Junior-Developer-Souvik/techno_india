@@ -20,50 +20,50 @@
                             <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
-                                   
-                                    
                                     <th>User name</th>
                                     <th>Contact</th>
-                                   
                                     <th>Message</th>
-                                    
-                                   
                                 </tr>
                             </thead>
-                            <tbody>
-                                @forelse ($data as $index => $item)
-                                    <tr>
-                                        <td>{{ $index + 1}}</td>
-                                       <td>{{$item->full_name}}</td>
-                                      
-                                        <td>
-                                            <p class="small text-muted mb-0">{{ $item->mobile_number }}</p>
-                                        </td>
-                                       
-                                       
-                                        <td>
-                                            <p class="small text-muted mb-0">{{ $item->message }}</p>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="100%" class="text-center">No records found</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-
-                      
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                            
+                     <tbody>
+                         @forelse ($data as $index => $item)
+                             <tr>
+                                 <td>{{ $index + 1}}</td>
+                                <td>{{$item->full_name}}</td>
+                                <td>
+                                    <p class="small text-muted mb-0">{{ $item->mobile_number }}</p>
+                                </td>
+                                <td>
+                                    <p class="small text-muted mb-0">{{ $item->message }}</p>
+                                </td>
+                             </tr>
+                         @empty
+                         <tr>
+                             <td colspan="100%" class="text-center">No records found</td>
+                         </tr>
+                         @endforelse
+                     </tbody>
+                 </table>
+                 
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
 </section>
 @endsection
-                                       
+                                   
+                                    
+                                   
+                                    
+                                         
+
 
                                         
+                                      
+                                       
+                                       
                                         
                                    
 

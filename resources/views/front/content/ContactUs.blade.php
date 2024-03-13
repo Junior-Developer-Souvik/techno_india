@@ -92,37 +92,19 @@
             type:'POST',
             data:$(this).serialize(),
             success:function(response,status){
-                $('#contactForm')[0].reset();
+                $('#contactForm')[0].reset();    //Reset form fields
                 console.log(response);
                 console.log(status);
             },
             error:function(xhr){
-                $('#errors').html('');
+                $('#errors').html('');   // Clear any previous errors
                 //Display Validation error
                 $.each(xhr.responseJSON.error,function(key,value){
                     $('#errors').append('<p>'+ value +'</p>');
                 });
             }
         });
-        // $.ajax({
-        //     url: "{{url('store')}}",
-        //     type: 'POST',
-        //     data: $(this).serialize(),
-        //     success: function (response) {
-        //         // alert(response.message); // Show success message
-        //         // $('#errors').html(''); // Clear any previous errors
-        //         console.log(response);
-        //         $('#contactForm')[0].reset(); // Reset form fields
-        //     },
-        //     error: function (xhr) {
-        //         $('#errors').html(''); // Clear any previous errors
-
-        //         // Display validation errors
-        //         $.each(xhr.responseJSON.errors, function (key, value) {
-        //             $('#errors').append('<p>' + value + '</p>');
-        //         });
-        //     }
-        // });
+      
     });
 });
 //        </script>
