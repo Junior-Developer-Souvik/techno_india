@@ -178,6 +178,7 @@ class ContentController extends Controller
         
         return view("front.content.ContactUs", compact('ContactUs','SocialMedia'));
     }
+    
 
     public function LeadStore(Request $request){
         // return $request->post();

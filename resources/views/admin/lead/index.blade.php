@@ -10,21 +10,10 @@
                     <div class="card-header">
                         <div class="row mb-3">
                             <div class="col-md-12 text-right">
-                                <a href="" class="btn btn-sm btn-success"> <i class="fa fa-file-excel"></i> Export</a>
+                                <a href="{{route('admin.exportExcel')}}" class="btn btn-sm btn-success"> <i class="fa fa-file-excel"></i> Export</a>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6"></div>
-                            <div class="col-md-6">
-                                <form action="" method="get">
-                                    <div class="d-flex justify-content-end">
-                                       
-
-                                      
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                     
                     </div>
                     <div class="card-body">
                         <table class="table table-sm table-hover">
@@ -55,23 +44,6 @@
                                         <td>
                                             <p class="small text-muted mb-0">{{ $item->message }}</p>
                                         </td>
-                                       
-
-                                        
-                                        
-                                        {{-- <td class="d-flex">
-                                            <div class="btn-group">
-                                                <a href="{{ route('admin.lead.edit', $item->id) }}" class="btn btn-sm btn-dark" data-toggle="tooltip" title="Edit">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-
-                                                <a href="{{ route('admin.lead.delete', $item->id) }}" class="btn btn-sm btn-dark" onclick="return confirm('Are you sure ?')" data-toggle="tooltip" title="Delete">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-                                            </div>
-                                        </td> --}}
-
-                                               
                                     </tr>
                                 @empty
                                     <tr>
@@ -89,3 +61,10 @@
     </div>
 </section>
 @endsection
+                                       
+
+                                        
+                                        
+                                   
+
+                                               

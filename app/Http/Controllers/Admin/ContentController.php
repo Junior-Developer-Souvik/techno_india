@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Interfaces\CategoryInterface;
+use App\Exports\LeadsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 use Illuminate\Support\Facades\Hash;
 use App\Models\ContentAbout;
@@ -1147,6 +1149,10 @@ class ContentController extends Controller
                     $data = $this->CategoryRepository->listAllLead();
                 }
                 return view('admin.lead.index', compact('data'));
+            }
+
+            public function export(){
+                return Excel::download(new LeadsExport(), 'bulkData.xlsx');
             }
 
             public function ContactUsIndex(Request $request){

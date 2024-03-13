@@ -63,7 +63,7 @@
                         <textarea class="form-control" name="message" id="message" rows="4" placeholder="Purpose / Message"></textarea>
                       </div>
                       <div class="col-md-7">
-                          <div class="g-recaptcha" data-sitekey="6Le8oq8UAAAAADSyaubiMfcxL1IqnYNDLPHeCKa8"></div>
+                          <div class="g-recaptcha" data-sitekey="6LePFpcpAAAAAGUkShiTDcvoCaFBjQ_ryYhaf57k"></div>
                       </div>
                       <div class="col-md-5 text-right">
                           <button  class="apply_now btn btn-info" id="btn">Submit</a>

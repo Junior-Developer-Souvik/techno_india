@@ -76,6 +76,8 @@ Route::name('admin.')->group(function() {
                 Route::post('/update', [ContentController::class, 'LeadUpdate'])->name('lead.update');
                 Route::get('/delete/{id}', [ContentController::class, 'LeadDelete'])->name('lead.delete');
                 Route::get('/status/{id}', [ContentController::class, 'LeadStatus'])->name('lead.status');
+                Route::get('/exportAll', [ContentController::class, 'export'])->name('exportExcel');
+
             });
           
             
